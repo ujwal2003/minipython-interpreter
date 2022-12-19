@@ -1,0 +1,65 @@
+#################################################################################################
+#	DISCLAIMER:                                                                                 #
+#		This is an archive of the submission that was graded, which passed with a grade of 50,  #
+#		for the attempted update of the code check in the HW2_new folder in the Uni/COSC-4315   #
+#		directory.                                                                              #
+#	                                                                                            #
+#		This code submission passes for only testcases/in01.py, and testcases/in06.py           #
+#	                                                                                            #
+#		everything after this diclaimer was part of the original submission.                    #
+#		date submission was uploaded to the server: 12/04/2022                                  #
+#		date disclaimer added: 12/16/2022                                                       #
+#################################################################################################
+
+Made by Ujwal Joshi
+
+this code must be compiled in the following manner:
+ g++ minipython.cpp -o minipython
+
+a dictionary data structure was used for efficient access and storage of identifiers and variables.
+
+Some brief notes, remarks and explanations:
+ As will become evident when running this code, it only works for the most simplest testcases. Other 'complex features' such as if/else and functions do not work.
+I apologize for this as even with extended time I could not get these to work, while I did not have time to implement thse features I was in the process of implementing
+if/else and had ideas for how to do functions. I could not implement these in time as I wished to submit something working with the time I had left.
+
+However, to show that I did have some idea of what I was doing, here is an explanation of how I would have implemented if/else and functions:
+	IF/ELSE: 
+		begin by doing syntax analysis for if and else which would have been done with the following grammar:
+			bool_expr 	::= 	(atom|list_acc) "=""=" (atom|list_acc)
+							 || (atom|list_acc) ">""=" (atom|list_acc)
+							 || (atom|list_acc) "<""=" (atom|list_acc)
+							 || (atom|list_acc) ">" (atom|list_acc)
+							 || (atom|list_acc) "<" (atom|list_acc)
+						
+			if_stmt 	::= 	"if" "(" bool_expr ")" ":" || "if" bool_expr ":"
+			if_block 	::= 	if_stmt statements STMT_END ENDL
+			else_stmt 	::= 	"else" ":"
+			else_block 	::= 	else_stmt statements STMT_END ENDL
+			
+		the main loop would then have checked for an if token and set a flag to let the code know that it was in a "block" (meaning a block of code)
+		the boolean expression and each of the statements in the above grammar would have had their own nodes in the AST, upon those nodes being
+		created, instead of being put in an AST they would be pushed into a vector of ASTNodes* (hence the flag in main for 'block' so the loop
+		won't pass the trees into the interpreter but wait till all the code in the block is gathered). A flag would also be checked for 'else' if
+		it were to follow an if statement. Once this block is over, the vector of nodes would be applied into a modifed version of the
+		shunting yard algorithm which would return a queue of the nodes in postfix order (with the the if/else being the operators and all other bits
+		of code being the operands). This queue would then be passed to a postfix evaluator, with the operands (the constituent lines of code within
+		the if/else) being pushed into a stack. If an 'if' was encountered in the queue, and the output queue was empty all the nodes from the stack
+		would be popped and a 'ifElseBlockNode' would be created with its left most child being the boolean expression from the ifNode, and its
+		middle child would be a list of all the nodes that were popped from the stack, (the right child would be null) this would then be pushed into 
+		the output queue. If an 'else' was encountered in the postfix queue all the nodes from the stack would be popped, put into a list, and added as
+		the right child of the if node already in the output queue. If multiple other if nodes were encountered, along with all the other nodes in the
+		stack, the ifElseBlockNode from the output queue would also be popped and added as a child of a new ifElseBlockNode which would then be pushed
+		into the output queue, this way the program deals with nesting. This process is repeated until all items from the postfix queue have been popped.
+		I used a very similar process to handle expressions in the code, which can be looked to as an example of how these algorithms can be implemented.
+		Upon the completion of this algorithm, the output queue would only have one item in it, this element would be the AST for the if/else statement(s)
+		which would then be passed to the interpreter to be interpreted. 
+	
+	FUCNTIONS:
+		parsing and tree creation for the functions would be done in a similar manner to the if/else statement, the tree would contain extra child nodes
+		for the function parameters (a new 'return' node type would also have to be created). Once this tree would be passed to the interpreter it would
+		create a new 'interpreter instance' (as my Interpreter is a class), the symbol table is outside the class and would hold the 'global variables.'
+		A new symbol table would be created for the 'local variables' (i.e. the function paramters and any variables declared inside the function). Once
+		this function returns the result would be pushed into the evaluate stack which can then be accessed by the original interpreter instance to attain
+		the returned output of the function.
+		
