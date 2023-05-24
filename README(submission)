@@ -1,16 +1,3 @@
-#################################################################################################
-#	DISCLAIMER:                                                                                 #
-#		This is an archive of the submission that was graded, which passed with a grade of 50,  #
-#		for the attempted update of the code check in the HW2_new folder in the Uni/COSC-4315   #
-#		directory.                                                                              #
-#	                                                                                            #
-#		This code submission passes for only testcases/in01.py, and testcases/in06.py           #
-#	                                                                                            #
-#		everything after this diclaimer was part of the original submission.                    #
-#		date submission was uploaded to the server: 12/04/2022                                  #
-#		date disclaimer added: 12/16/2022                                                       #
-#################################################################################################
-
 Made by Ujwal Joshi
 
 this code must be compiled in the following manner:
@@ -19,7 +6,7 @@ this code must be compiled in the following manner:
 a dictionary data structure was used for efficient access and storage of identifiers and variables.
 
 Some brief notes, remarks and explanations:
- As will become evident when running this code, it only works for the most simplest testcases. Other 'complex features' such as if/else and functions do not work.
+ As will become evident when running this code, it only works for the most simplest testcases. Other features such as if/else and functions do not work.
 I apologize for this as even with extended time I could not get these to work, while I did not have time to implement thse features I was in the process of implementing
 if/else and had ideas for how to do functions. I could not implement these in time as I wished to submit something working with the time I had left.
 
