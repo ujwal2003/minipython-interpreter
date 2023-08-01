@@ -1,16 +1,9 @@
-Made by Ujwal Joshi
-
 this code must be compiled in the following manner:
  g++ minipython.cpp -o minipython
 
 a dictionary data structure was used for efficient access and storage of identifiers and variables.
 
-Some brief notes, remarks and explanations:
- As will become evident when running this code, it only works for the most simplest testcases. Other features such as if/else and functions do not work.
-I apologize for this as even with extended time I could not get these to work, while I did not have time to implement thse features I was in the process of implementing
-if/else and had ideas for how to do functions. I could not implement these in time as I wished to submit something working with the time I had left.
-
-However, to show that I did have some idea of what I was doing, here is an explanation of how I would have implemented if/else and functions:
+Some brief notes on ideas to implement if/else statements and functions:
 	IF/ELSE: 
 		begin by doing syntax analysis for if and else which would have been done with the following grammar:
 			bool_expr 	::= 	(atom|list_acc) "=""=" (atom|list_acc)
